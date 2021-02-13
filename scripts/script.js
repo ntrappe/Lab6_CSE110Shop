@@ -11,14 +11,12 @@ let productData = {
 
 let arrProductDatas = [];
 
-// local storage
-locStor = window.localStorage;
-
 window.addEventListener('DOMContentLoaded', () => {
   // already things in storage
   if (localStorage.getItem('products')) {
     createProductItems();
-    alert(locStor.length + ' things in storage already');
+    updateCart();
+
   // haven't fetched items from website so do that
   } else {
     alert("let's fetch");
@@ -26,32 +24,44 @@ window.addEventListener('DOMContentLoaded', () => {
       .then(response => response.json())
       .then(data => {
         // data is a set of Objects and local storage can only take in strings so convert to string
-        locStor.setItem('products', JSON.stringify(data));
+        localStorage.setItem('products', JSON.stringify(data));
         
-        // populate local arrays
+        /*
+        // populate local arrays 
         for (var i in data) {
-          let product = new Object();
-          product.title = data[i].title;
-          product.price = data[i].price;
-          product.description = data[i].description;
-          product.category = data[i].category;
-          product.image = data[i].image;
-          arrProductDatas.push(product);
-          //alert("did I just add " + data[i].title + " ?= " + (arrProductDatas[i]).title);
-        }
+          createLocProduct(i);
+        }*/
       })
     createProductItems();
+    updateCart();
   }
 });
 
-function createProductItems() {
-  const products = JSON.parse(localStorage.getItem('products'));
-  const productList = document.getElementById('product-list');
 
-  //productList.appendChild(new ProductItem(products[0]));
+function createProductItems() {
+  let products = JSON.parse(localStorage.getItem('products'));
+  let productList = document.getElementById('product-list');
 
   for (var i in products) {
     productList.appendChild(new ProductItem(products[i]));
   }
+}
+
+function updateCart() {
+  let cartCount = document.getElementById('cart-count');
+  if (localStorage.cart > 0) {
+    alert('had things in cart');
+    cartCount.innerHTML = localStorage.cart;
+  }
+}
+
+function createLocProduct(data) {
+  let product = new Object();
+  product.title = data.title;
+  product.price = data.price;
+  product.description = data.description;
+  product.category = data.category;
+  product.image = data.image;
+  arrProductDatas.push(product);
 }
 

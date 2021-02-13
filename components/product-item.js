@@ -14,6 +14,10 @@ class ProductItem extends HTMLElement {
     
     // cart that holds products and the number of them
     const cartCount = document.getElementById('cart-count');
+    const ADD = 'Add to Cart';
+    const ADD_ALERT = 'Added to Cart!';
+    const REMOVE = 'Remove from Cart';
+    const REMOVE_ALERT = 'Removed from Cart!';
 
     // product image
     let image = document.createElement('img');
@@ -35,17 +39,38 @@ class ProductItem extends HTMLElement {
     let button = document.createElement('button');
     button.innerHTML = 'Add to Cart';
     button.onclick = () => {
-      alert('Added to Cart!');
+      let numItems = parseInt(cartCount.innerHTML);
+
+      // option 1: click 'Add to Cart' ==> +1 num items in cart and change to Remove from Cart
+      if (button.innerHTML === ADD) {
+        alert(ADD_ALERT);
+        button.innerHTML = REMOVE;
+        numItems = numItems + 1;
+        alert('num items now: ' + numItems);
+        localStorage.setItem('cart', String(numItems));
+        cartCount.innerHTML = String(numItems);
+        localStorage.setItem(products.id, 'in cart');
+      // option 2: click 'Remove from Cart' ==> -1 num items in cart and change to Add to Cart
+      } else {
+        alert(REMOVE_ALERT);
+        button.innerHTML = ADD;
+        numItems = numItems - 1;
+        alert('num items now: ' + numItems);
+        localStorage.setItem('cart', String(numItems));
+        cartCount.innerHTML = String(numItems);
+        localStorage.removeItem(products.id);
+      }
     };
 
-     /*
-    shadow.innerHTML = `
-      <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" alt="Fjallraven - Foldstack No. 1 Backpack, Fits 15 Laptops" width=200>
-      <p class="title">Fjallraven - Foldstack No. 1 Backpack, Fits 15 Laptops</p>
-      <p class="price">$109.95</p>
-      <button onclick="alert('Added to Cart!')">Add to Cart</button>
-    `;*/
+    // using local storage, instead of relying on button clicks, make sure you save whether
+    // a specific product was already added to the cart (therefore change button)
+    if (localStorage.getItem(products.id)) {
+      button.innerHTML = REMOVE;      // already in cart
+    } else {
+      button.innerHTML = ADD;         // not in cart
+    }
 
+   
     shadow.innerHTML = `
       <style>
         /* Custom Element CSS starts here */
