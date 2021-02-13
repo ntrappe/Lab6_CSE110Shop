@@ -8,24 +8,30 @@ class ProductItem extends HTMLElement {
     // create a shadow root
     const shadow = this.attachShadow({mode: 'open'});
 
+    // entire product that has features of title, price, images, etc.
     const productItem = document.createElement('li');
     productItem.className = 'product';
     
-    const cart = document.createElement
+    // cart that holds products and the number of them
+    const cartCount = document.getElementById('cart-count');
 
+    // product image
     let image = document.createElement('img');
     image.setAttribute('src', products.image);
     image.setAttribute('alt', products.title);
     image.setAttribute('width', 200);
 
+    // product name
     let title = document.createElement('p');
     title.className = 'title';
     title.innerHTML = products.title;
 
+    // product price
     let price = document.createElement('p');
     price.className = 'price';
     price.innerHTML = '$' + products.price;
    
+    // button to add product to cart
     let button = document.createElement('button');
     button.innerHTML = 'Add to Cart';
     button.onclick = () => {
