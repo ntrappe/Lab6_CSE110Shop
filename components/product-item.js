@@ -37,7 +37,7 @@ class ProductItem extends HTMLElement {
    
     // button to add product to cart
     let button = document.createElement('button');
-    button.innerHTML = 'Add to Cart';
+    button.innerHTML = ADD;
 
     button.onclick = () => {
       let numItems = parseInt(cartCount.innerHTML);
