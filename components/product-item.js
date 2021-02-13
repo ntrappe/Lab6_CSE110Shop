@@ -38,6 +38,7 @@ class ProductItem extends HTMLElement {
     // button to add product to cart
     let button = document.createElement('button');
     button.innerHTML = 'Add to Cart';
+    
     button.onclick = () => {
       let numItems = parseInt(cartCount.innerHTML);
 
@@ -46,19 +47,18 @@ class ProductItem extends HTMLElement {
         alert(ADD_ALERT);
         button.innerHTML = REMOVE;
         numItems = numItems + 1;
-        alert('num items now: ' + numItems);
-        localStorage.setItem('cart', String(numItems));
-        cartCount.innerHTML = String(numItems);
+        localStorage.setItem('cart', String(numItems));   // update local storage
         localStorage.setItem(products.id, 'in cart');
+        cartCount.innerHTML = String(numItems);           // update cart
+
       // option 2: click 'Remove from Cart' ==> -1 num items in cart and change to Add to Cart
       } else {
         alert(REMOVE_ALERT);
         button.innerHTML = ADD;
         numItems = numItems - 1;
-        alert('num items now: ' + numItems);
-        localStorage.setItem('cart', String(numItems));
-        cartCount.innerHTML = String(numItems);
+        localStorage.setItem('cart', String(numItems));   // update local storage
         localStorage.removeItem(products.id);
+        cartCount.innerHTML = String(numItems);           // update cart
       }
     };
 
@@ -70,7 +70,6 @@ class ProductItem extends HTMLElement {
       button.innerHTML = ADD;         // not in cart
     }
 
-   
     shadow.innerHTML = `
       <style>
         /* Custom Element CSS starts here */
@@ -148,8 +147,6 @@ class ProductItem extends HTMLElement {
     productItem.appendChild(title);
     productItem.appendChild(price);
     productItem.appendChild(button);
-
-  
   }
 }
 
