@@ -38,7 +38,7 @@ class ProductItem extends HTMLElement {
     // button to add product to cart
     let button = document.createElement('button');
     button.innerHTML = 'Add to Cart';
-    
+
     button.onclick = () => {
       let numItems = parseInt(cartCount.innerHTML);
 
@@ -62,8 +62,8 @@ class ProductItem extends HTMLElement {
       }
     };
 
-    // using local storage, instead of relying on button clicks, make sure you save whether
-    // a specific product was already added to the cart (therefore change button)
+    // in case of refresh or no button click, use local storage to check
+    // if product being added is already in cart (via its id) and adjust button
     if (localStorage.getItem(products.id)) {
       button.innerHTML = REMOVE;      // already in cart
     } else {
