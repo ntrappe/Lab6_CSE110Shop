@@ -8,7 +8,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // haven't fetched items from website so do that
   } else {
-    fetch('https://fakestoreapi.com/products')
+    fetch('https://fakestoreapi.herokuapp.com/products')
       .then(response => response.json())
       .then(data => {
         // Note: data is a set of Objects but localStorage can only take 
